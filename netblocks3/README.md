@@ -11,7 +11,7 @@ This module retrieves the DNS entries recursively as per the below links
     The AWS ranges
         https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
 
-Install the package with `pip install netblocks` or `pip install git+https://github.com/hm-distro/netblocks/`
+Install the package with `pip install netblocks3` or `pip install git+https://github.com/tomasfse/netblocks/`
 
 The `fetch()` method has the default parameter value of `initial_dns_list=[GOOGLE_INITIAL_CLOUD_NETBLOCK_DNS, GOOGLE_INITIAL_SPF_NETBLOCK_DNS]`
 
@@ -29,7 +29,7 @@ where
 See [here](https://github.com/hm-distro/netblocks) on how to use this module in Google App Engine  
 ### API Usage
 
-    import netblocks
+    import netblocks3 as netblocks
     cidr_blocks = set()
     api = netblocks.NetBlocks()
     try:

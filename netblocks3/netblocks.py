@@ -46,6 +46,9 @@ class NetBlocks(object):
 
     """
 
+    def __init__(self, proxies = None):
+        self.proxies = proxies
+
     def _fetch_json_(self, url):
         """
         Fetch the data from the url and extract the relevant json payload.
@@ -63,12 +66,12 @@ class NetBlocks(object):
           Exception: Any non 200 message raises this Exception
         """
 
-        result = requests.get(url, verify=True)
+        result = requests.get(url, verify=True, proxies = self.proxies)
         if result.status_code == 200:  # OK.no issues
             try:
                 structured_dictionary = json.loads(result.text)
-            except ValueError, e:
-                raise Exception("Invalid json returned from %s. %s " % (url, e.message))
+            except ValueError as e:
+                raise Exception("Invalid json returned from %s. %s " % (url, e))
             # Valid json. Proceed with extract.
             return structured_dictionary["Answer"][0]["data"]
         else:
@@ -106,7 +109,7 @@ class NetBlocks(object):
             for initial_dns in initial_dns_list:
 
                 if AWS_IP_RANGES == initial_dns:
-                    r = requests.get(AWS_IP_RANGES)
+                    r = requests.get(AWS_IP_RANGES, proxies = self.proxies)
                     payload=  r.json()
                     for prefix in payload['prefixes']:
                         cidr_blocks.add("ip4:%s"%prefix['ip_prefix'])
@@ -138,12 +141,12 @@ class NetBlocks(object):
 
             return cidr_blocks
         except Exception as e:
-            raise NetBlockRetrievalException(e.message)
+            raise NetBlockRetrievalException(e)
 
 
 if __name__ =="__main__":
     api=  NetBlocks()
     cidr_blocks = api.fetch()
-    print "Total %d" % len(cidr_blocks)
+    print("Total %d" % len(cidr_blocks))
     for cidr in cidr_blocks:
-        print cidr
+        print(cidr)
