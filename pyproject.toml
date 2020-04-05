@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netblocks3"
-version = "0.0.14"
+version = "0.0.15"
 description = "Get the Cloud Provider netblocks (Python3 version)"
 authors = ["hm-distro", "tomasfse"]
 license = "Apache-2.0"
